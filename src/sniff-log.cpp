@@ -190,8 +190,9 @@ void log_session_query(mysql_session* sess){
     if(info->count <= truncate_len){
         /* may cause the origin query broken due to charset */
         remove_newline(info->data);
-        fprintf(outstream, "%s\t %s\t %s\t %s\t %s\t %10d\t %s\n", 
+        fprintf(outstream, "%s\t %ld %s\t %s\t %s\t %s\t %10d\t %s\n", 
                 start_tm, 
+                info->query_end.tv_usec,
                 username,
                 inet_ntoa(*(struct in_addr*)&sess->skey.saddr),
                 dbname,
@@ -203,8 +204,9 @@ void log_session_query(mysql_session* sess){
         /* may cause the origin query broken due to charset */
         remove_newline(info->data);
 
-        fprintf(outstream, "%s\t %s\t %s\t %s\t %s\t %10d\t %s...\n", 
+        fprintf(outstream, "%s\t %ld %s\t %s\t %s\t %s\t %10d\t %s...\n", 
                 start_tm, 
+                info->query_end.tv_usec,
                 username,
                 inet_ntoa(*(struct in_addr*)&sess->skey.saddr),
                 dbname,
